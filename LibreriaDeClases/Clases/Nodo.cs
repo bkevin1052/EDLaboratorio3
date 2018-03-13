@@ -15,6 +15,8 @@ namespace LibreriaDeClases
         public Nodo<T> izquierdo { get; set; }
         public Nodo<T> derecho { get; set; }
 
+        public ComparadorNodosDelegate<T> comparador;
+
         public Nodo(T dato)
         {
             this.dato = dato;
