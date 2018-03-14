@@ -17,12 +17,13 @@ namespace LibreriaDeClases
 
         public ComparadorNodosDelegate<T> comparador;
 
-        public Nodo(T dato)
+        public Nodo(T dato, ComparadorNodosDelegate<T> _comparador)
         {
             this.dato = dato;
             this.factorEquilibrio = 0;
             this.derecho = null;
             this.izquierdo = null;
+            comparador = _comparador;
         }
 
         public int CompareTo(T other)

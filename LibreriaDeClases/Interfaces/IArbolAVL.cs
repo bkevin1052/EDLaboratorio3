@@ -15,6 +15,11 @@ namespace LibreriaDeClases.Interfaces
         Nodo<T> RotacionDobleIzquierda(Nodo<T> nodo);
         Nodo<T> RotacionDobleDerecha(Nodo<T> nodo);
         Nodo<T> InsertarAVL(Nodo<T> nuevo, Nodo<T> subArbol);
-        void Insertar(T dato);
+        void Insertar(Nodo<T> dato);
+        void Eliminar(Nodo<T> dato);
+        void InOrden(Nodo<T> nodo);
+        void PreOrden(Nodo<T> nodo);
+        void PostOrden(Nodo<T> nodo);
+
     }
 }

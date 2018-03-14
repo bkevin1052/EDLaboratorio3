@@ -17,7 +17,22 @@ namespace LibreriaDeClases.Clases
             raiz = null;
         }
 
-        //Buscar Nodo
+        public void Insertar(Nodo<T> nuevo)
+        {
+            if (raiz == null)
+            {
+                raiz = nuevo;
+            }
+            else
+            {
+                raiz = InsertarAVL(nuevo, raiz);
+            }
+        }
+
+        public void Eliminar(Nodo<T> dato)
+        {
+            throw new NotImplementedException();
+        }
 
         public Nodo<T> Buscar(T dato, Nodo<T> nodo)
         {
@@ -57,6 +72,7 @@ namespace LibreriaDeClases.Clases
         {
             Nodo<T> aux = nodo.izquierdo;
             nodo.izquierdo = aux.derecho;
+            aux.derecho = nodo;
             nodo.factorEquilibrio = Math.Max(ObtenerFactorEquilibrio(nodo.izquierdo), ObtenerFactorEquilibrio(nodo.derecho)) + 1;
             aux.factorEquilibrio = Math.Max(ObtenerFactorEquilibrio(aux.izquierdo), ObtenerFactorEquilibrio(aux.derecho)) + 1;
 
@@ -68,8 +84,9 @@ namespace LibreriaDeClases.Clases
         {
             Nodo<T> aux = nodo.derecho;
             nodo.derecho = aux.izquierdo;
-            nodo.factorEquilibrio = Math.Max(ObtenerFactorEquilibrio(nodo.derecho), ObtenerFactorEquilibrio(nodo.izquierdo)) + 1;
-            aux.factorEquilibrio = Math.Max(ObtenerFactorEquilibrio(aux.derecho), ObtenerFactorEquilibrio(aux.izquierdo)) + 1;
+            aux.izquierdo = nodo;
+            nodo.factorEquilibrio = Math.Max(ObtenerFactorEquilibrio(nodo.izquierdo), ObtenerFactorEquilibrio(nodo.derecho)) + 1;
+            aux.factorEquilibrio = Math.Max(ObtenerFactorEquilibrio(aux.izquierdo), ObtenerFactorEquilibrio(aux.derecho)) + 1;
 
             return aux;
         }
@@ -80,7 +97,6 @@ namespace LibreriaDeClases.Clases
             Nodo<T> temp;
             nodo.izquierdo = RotacionDerecha(nodo.izquierdo);
             temp = RotacionIzquierda(nodo);
-
             return temp;
         }
 
@@ -88,7 +104,7 @@ namespace LibreriaDeClases.Clases
         public Nodo<T> RotacionDobleDerecha(Nodo<T> nodo)
         {
             Nodo<T> temp;
-            nodo.derecho = RotacionDerecha(nodo.derecho);
+            nodo.derecho = RotacionIzquierda(nodo.derecho);
             temp = RotacionDerecha(nodo);
 
             return temp;
@@ -122,7 +138,7 @@ namespace LibreriaDeClases.Clases
                     }
                 }
 
-            } else if (nuevo.CompareTo(subArbol.derecho.dato) > 0)// en duda
+            } else if (nuevo.CompareTo(subArbol.dato) > 0)// en duda
             {
                 if (subArbol.derecho == null)
                 {
@@ -146,7 +162,7 @@ namespace LibreriaDeClases.Clases
             }
             else
             {
-                // Nodo duplicado
+                throw new Exception("Nodo duplicado");
             }
             //Actualizar altura
             if ((subArbol.izquierdo == null) && (subArbol.derecho != null))
@@ -162,20 +178,37 @@ namespace LibreriaDeClases.Clases
                 subArbol.factorEquilibrio = Math.Max(ObtenerFactorEquilibrio(subArbol.izquierdo), ObtenerFactorEquilibrio(subArbol.derecho)) +1;
             }
             return nuevoPadre;
-        }
+        }       
 
-
-        public void Insertar(T dato)
+        public void InOrden(Nodo<T> nodo)
         {
-            Nodo<T> nuevo = new Nodo<T>(dato);
-            if(raiz == null)
+            if(nodo != null)
             {
-                raiz = nuevo;
-            }
-            else
-            {
-                raiz = InsertarAVL(nuevo, raiz);
+
+                InOrden(nodo.izquierdo);
+                //obtener dato aqui
+                InOrden(nodo.derecho);
             }
         }
+        public void PreOrden(Nodo<T> nodo)
+        {
+            if (nodo != null)
+            {
+                //obtener dato aqui
+                InOrden(nodo.izquierdo);
+                InOrden(nodo.derecho);
+            }
+        }
+        public void PostOrden(Nodo<T> nodo)
+        {
+            if (nodo != null)
+            {
+                InOrden(nodo.izquierdo);
+                InOrden(nodo.derecho);
+                //obtener dato aqui
+            }
+        }
+
+        
     }
 }
