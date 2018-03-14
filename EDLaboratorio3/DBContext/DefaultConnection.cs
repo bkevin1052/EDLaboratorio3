@@ -12,8 +12,9 @@ namespace EDLaboratorio3.DBContext
         private static volatile DefaultConnection Instance;
         private static object syncRoot = new Object();
 
-        public ArbolAVL<Partido> miAVL = new ArbolAVL<Partido>();      
-        
+        public ArbolAVL<Partido> miAVLFechas = new ArbolAVL<Partido>();
+        public ArbolAVL<Partido> miAVLNoPartidos = new ArbolAVL<Partido>();
+
 
         public int IDActual { get; set; }
 

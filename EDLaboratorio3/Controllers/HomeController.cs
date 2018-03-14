@@ -19,39 +19,52 @@ namespace EDLaboratorio3.Controllers
         {
             logWriter("VISITO INICIO", ruta, false);
 
+            //PRUEBA DE INSERCIÔN
+            /***INSTANCIAS***
             Partido P1 = new Partido();
             Partido P2 = new Partido();
             Partido P3 = new Partido();
 
+            //ATRIBUTOS
             P1.Pais1 = "Guatemala";
             P1.Pais2 = "Italia";
             P1.Estadio = "Mateo Flores";
             P1.NoPartido = 50;
-            P1.FechaPartido = DateTime.Now;
+            P1.FechaPartido = Convert.ToDateTime("1 / 14 / 2018 3:49:11 PM");
             P1.Grupo = "A";
 
             P2.Pais1 = "Estados Unidos";
             P2.Pais2 = "Italia";
             P2.Estadio = "CAMP NOU";
             P2.NoPartido = 60;
-            P2.FechaPartido = DateTime.Now;
+            P2.FechaPartido = Convert.ToDateTime("2 / 14 / 2018 3:49:11 PM");
             P2.Grupo = "C";
 
             P3.Pais1 = "Mexico";
             P3.Pais2 = "Italia";
             P3.Estadio = "bERNABEO";
             P3.NoPartido = 70;
-            P3.FechaPartido = DateTime.Now;
+            P3.FechaPartido = Convert.ToDateTime("3 / 14 / 2018 3:49:11 PM");
             P3.Grupo = "B";
 
+            //cREACION DE NODOS
             Nodo<Partido> n1 = new Nodo<Partido>(P1, CompararNumero);
             Nodo<Partido> n2 = new Nodo<Partido>(P2, CompararNumero);
             Nodo<Partido> n3 = new Nodo<Partido>(P3, CompararNumero);
 
-            db.miAVL.Insertar(n1);
-            db.miAVL.Insertar(n2);                        
-            db.miAVL.Insertar(n3);
+            Nodo<Partido> n4 = new Nodo<Partido>(P1, CompararFecha);
+            Nodo<Partido> n5 = new Nodo<Partido>(P2, CompararFecha);
+            Nodo<Partido> n6 = new Nodo<Partido>(P3, CompararFecha);
 
+
+            //INSERCION
+            db.miAVLNoPartidos.Insertar(n1);
+            db.miAVLNoPartidos.Insertar(n2);                        
+            db.miAVLNoPartidos.Insertar(n3);
+
+            db.miAVLFechas.Insertar(n4);
+            db.miAVLFechas.Insertar(n5);
+            db.miAVLFechas.Insertar(n6);*/
             return View();
         }
         public static int CompararFecha(Partido actual, Partido nuevo)
