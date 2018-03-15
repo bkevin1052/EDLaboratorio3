@@ -10,7 +10,7 @@ namespace LibreriaDeClases.Clases
     public class ArbolAVL<T> : IArbolAVL<T>
     {
         private Nodo<T> raiz;
-
+        List<T> lista;
 
         public ArbolAVL()
         {
@@ -178,37 +178,85 @@ namespace LibreriaDeClases.Clases
                 subArbol.factorEquilibrio = Math.Max(ObtenerFactorEquilibrio(subArbol.izquierdo), ObtenerFactorEquilibrio(subArbol.derecho)) +1;
             }
             return nuevoPadre;
-        }       
-
-        public void InOrden(Nodo<T> nodo)
-        {
-            if(nodo != null)
-            {
-
-                InOrden(nodo.izquierdo);
-                //obtener dato aqui
-                InOrden(nodo.derecho);
-            }
-        }
-        public void PreOrden(Nodo<T> nodo)
-        {
-            if (nodo != null)
-            {
-                //obtener dato aqui
-                InOrden(nodo.izquierdo);
-                InOrden(nodo.derecho);
-            }
-        }
-        public void PostOrden(Nodo<T> nodo)
-        {
-            if (nodo != null)
-            {
-                InOrden(nodo.izquierdo);
-                InOrden(nodo.derecho);
-                //obtener dato aqui
-            }
         }
 
-        
+        /// <summary>
+        /// Metodo recorrer InOrden
+        /// </summary>
+        /// <param name="recorrido"></param>
+        public List<T> EnOrden()
+        {
+            lista = new List<T>();
+            RecorridoEnOrdenInterno(raiz);
+            return lista;
+        }
+
+        /// <summary>
+        /// Metodo recorrer PreOrden
+        /// </summary>
+        /// <param name="recorrido"></param>
+        public List<T> PreOrden()
+        {
+            lista = new List<T>();
+            RecorridoPreOrdenInterno(raiz);
+            return lista;
+        }
+
+        /// <summary>
+        /// Metodo recorrer PostOrden
+        /// </summary>
+        /// <param name="recorrido"></param>
+        public List<T> PostOrden()
+        {
+            lista = new List<T>();
+            RecorridoPostOrdenInterno(raiz);
+            return lista;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="recorrido"></param>
+        /// <param name="actual"></param>
+        private void RecorridoEnOrdenInterno(Nodo<T> actual)
+        {
+            if (actual != null)
+            {
+                RecorridoEnOrdenInterno(actual.izquierdo);
+                lista.Add(actual.dato);
+                RecorridoEnOrdenInterno(actual.derecho);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="recorrido"></param>
+        /// <param name="actual"></param>
+        private void RecorridoPostOrdenInterno(Nodo<T> actual)
+        {
+            if (actual != null)
+            {
+                RecorridoPostOrdenInterno(actual.izquierdo);
+                RecorridoPostOrdenInterno(actual.derecho);
+                lista.Add(actual.dato);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="recorrido"></param>
+        /// <param name="actual"></param>
+        private void RecorridoPreOrdenInterno(Nodo<T> actual)
+        {
+            if (actual != null)
+            {
+                lista.Add(actual.dato);
+                RecorridoPreOrdenInterno(actual.izquierdo);
+                RecorridoPreOrdenInterno(actual.derecho);
+            }
+        }
+
     }
 }

@@ -5,11 +5,12 @@
 <div class="jumbotron">
     <h1>FIFA 18</h1>
 </div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Cargar archivo</h2>
-        <p>Ir a modulo</p>
-        
-    </div>
+@using (Html.BeginForm("CheckRadio", "Home", FormMethod.Post))
+{
+<div>
+    Seleccione una llave: <br />
+    @Html.RadioButton("Llave", "fecha")Fecha del partido
+    @Html.RadioButton("Llave", "nopartido")Número de partido
 </div>
+    <input type="submit" value="Continuar"/>
+}
