@@ -120,7 +120,22 @@ namespace EDLaboratorio3.Controllers
                 {
                     string json = r.ReadToEnd();
                     dynamic array = JsonConvert.DeserializeObject(json);
-                    RecorridoPreOrdenInternoPartidosPorFecha(array);
+                    foreach (var item in array)
+                    {
+
+
+                        dynamic itemtemp = JsonConvert.DeserializeObject(item.Value.ToString());
+
+                        Partido temp = new Partido();
+                        temp.NoPartido = itemtemp.noPartido;
+                        temp.FechaPartido = itemtemp.FechaPartido;
+                        temp.Grupo = itemtemp.Grupo;
+                        temp.Pais1 = itemtemp.Pais1;
+                        temp.Pais2 = itemtemp.Pais2;
+                        temp.Estadio = itemtemp.Estadio;
+                        Nodo<Partido> n = new Nodo<Partido>(temp, CompararFechas);
+                        DBContext.DefaultConnection.miAVLFechas.Insertar(n);
+                    }
 
                 }
 
@@ -134,28 +149,7 @@ namespace EDLaboratorio3.Controllers
             return View(DBContext.DefaultConnection.miAVLFechas.EnOrden());
         }
 
-        private void RecorridoPreOrdenInternoPartidosPorFecha(dynamic actual)
-        {
 
-            if (actual != null)
-            {
-                var item = actual.valor;
-                Partido temp = new Partido();
-                temp.NoPartido = item.NoPartido;
-                temp.FechaPartido = item.FechaPartido;
-                temp.Grupo = item.Grupo;
-                temp.Pais1 = item.Pais1;
-                temp.Pais2 = item.Pais2;
-                temp.Estadio = item.Estadio;
-                Nodo<Partido> n = new Nodo<Partido>(temp, CompararFechas);
-                DBContext.DefaultConnection.miAVLFechas.Insertar(n);
-                RecorridoPreOrdenInternoPartidosPorFecha(JsonConvert.DeserializeObject(Convert.ToString(actual.izquierdo)));
-                RecorridoPreOrdenInternoPartidosPorFecha(JsonConvert.DeserializeObject(Convert.ToString(actual.derecho)));
-            }
-
-
-
-        }
 
         public static int CompararFechas(Partido actual, Partido nuevo)
         {
@@ -167,14 +161,14 @@ namespace EDLaboratorio3.Controllers
                 return 0;
         }
 
-        public ActionResult SubirArchivoPartidosPorNoPartido()
+        public ActionResult CargaArchivoNoPartido()
         {
             return View();
         }
 
         //Post SubirArchivoPaises
         [HttpPost]
-        public ActionResult SubirArchivoPartidosPorNoPartido(HttpPostedFileBase file)
+        public ActionResult CargaArchivoNoPartido(HttpPostedFileBase file)
         {
             string filePath = string.Empty;
             Archivo modelo = new Archivo();
@@ -197,7 +191,22 @@ namespace EDLaboratorio3.Controllers
                 {
                     string json = r.ReadToEnd();
                     dynamic array = JsonConvert.DeserializeObject(json);
-                    RecorridoPreOrdenInternoPartidosPorNoPartido(array);
+                    foreach(var item in array)
+                    {
+                        
+
+                        dynamic itemtemp = JsonConvert.DeserializeObject(item.Value.ToString());
+
+                            Partido temp = new Partido();
+                            temp.NoPartido = itemtemp.noPartido;
+                            temp.FechaPartido = itemtemp.FechaPartido;
+                            temp.Grupo = itemtemp.Grupo;
+                            temp.Pais1 = itemtemp.Pais1;
+                            temp.Pais2 = itemtemp.Pais2;
+                            temp.Estadio = itemtemp.Estadio;
+                            Nodo<Partido> n = new Nodo<Partido>(temp, CompararNoPartido);
+                            DBContext.DefaultConnection.miAVLNoPartidos.Insertar(n);
+                    }
 
                 }
 
@@ -211,28 +220,6 @@ namespace EDLaboratorio3.Controllers
             return View(DBContext.DefaultConnection.miAVLNoPartidos.EnOrden());
         }
 
-        private void RecorridoPreOrdenInternoPartidosPorNoPartido(dynamic actual)
-        {
-
-            if (actual != null)
-            {
-                var item = actual.valor;
-                Partido temp = new Partido();
-                temp.NoPartido = item.NoPartido;
-                temp.FechaPartido = item.FechaPartido;
-                temp.Grupo = item.Grupo;
-                temp.Pais1 = item.Pais1;
-                temp.Pais2 = item.Pais2;
-                temp.Estadio = item.Estadio;
-                Nodo<Partido> n = new Nodo<Partido>(temp, CompararNoPartido);
-                DBContext.DefaultConnection.miAVLNoPartidos.Insertar(n);
-                RecorridoPreOrdenInternoPartidosPorNoPartido(JsonConvert.DeserializeObject(Convert.ToString(actual.izquierdo)));
-                RecorridoPreOrdenInternoPartidosPorNoPartido(JsonConvert.DeserializeObject(Convert.ToString(actual.derecho)));
-            }
-
-
-
-        }
 
         public static int CompararNoPartido(Partido actual, Partido nuevo)
         {

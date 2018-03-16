@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EDLaboratorio3.DBContext;
+
 
 namespace EDLaboratorio3.Controllers
 {
@@ -14,6 +16,14 @@ namespace EDLaboratorio3.Controllers
             return View();
         }
 
+        public ActionResult IndexFecha()
+        {
+            return View(DBContext.DefaultConnection.miAVLFechas.EnOrden());
+        }
+        public ActionResult IndexNoPartido()
+        {
+            return View(DBContext.DefaultConnection.miAVLNoPartidos.EnOrden());
+        }
         // GET: Partido/Details/5
         public ActionResult Details(int id)
         {

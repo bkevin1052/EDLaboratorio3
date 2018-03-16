@@ -1,7 +1,30 @@
-﻿
+﻿@using EDLaboratorio3.Models
 @{
     ViewBag.Title = "CargaArchivoNoPartido";
 }
 
-<h2>CargaArchivoNoPartido</h2>
+<h2>@ViewBag.Title.</h2>
+@model IEnumerable<Partido>
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    @using (Html.BeginForm("CargaArchivoNoPartido", "Archivo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input type="file" name="file" />
+        <input type="submit" value="Import" />
+
+    }
+
+    @if (Model != null && Model.Count() > 0)
+    {
+        <input type="button" value="Continuar" onclick="location.href='@Url.Action("IndexNoPartido", "Partido" )'" />
+
+    }
+</body>
+</html>
 
