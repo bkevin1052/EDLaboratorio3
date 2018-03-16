@@ -162,7 +162,7 @@ namespace LibreriaDeClases.Clases
             }
             else
             {
-                //throw new Exception("Nodo duplicado");
+                return null;
             }
             //Actualizar altura
             if ((subArbol.izquierdo == null) && (subArbol.derecho != null))
