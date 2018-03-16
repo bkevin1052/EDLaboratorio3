@@ -17,9 +17,9 @@ namespace LibreriaDeClases.Interfaces
         Nodo<T> InsertarAVL(Nodo<T> nuevo, Nodo<T> subArbol);
         void Insertar(Nodo<T> dato);
         void Eliminar(Nodo<T> dato);
-        void InOrden(Nodo<T> nodo);
-        void PreOrden(Nodo<T> nodo);
-        void PostOrden(Nodo<T> nodo);
+        List<T> EnOrden();
+        List<T> PreOrden();
+        List<T> PostOrden();
 
     }
 }

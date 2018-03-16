@@ -110,5 +110,18 @@ namespace EDLaboratorio3.Controllers
             logReporter.WriteLine(contenido + "; " + DateTime.Now);
             logReporter.Close();
         }
+
+        public ActionResult CheckRadio (FormCollection frm)
+        {
+            string llave = frm["Llave"].ToString();
+            if(llave == "fecha")
+            {
+                return RedirectToAction("CargaArchivoFecha", "Archivo");
+            }
+            else
+            {
+                return RedirectToAction("CargaArchivoNoPartido", "Archivo");
+            }
+        }
     }
 }
