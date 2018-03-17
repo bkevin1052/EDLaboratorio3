@@ -34,23 +34,23 @@ namespace LibreriaDeClases.Clases
             throw new NotImplementedException();
         }
 
-        public Nodo<T> Buscar(T dato, Nodo<T> nodo)
+        public Nodo<T> Buscar(T dato, Nodo<T> raiz)
         {
-            if (raiz == null)
+            if (this.raiz == null)
             {
                 return null;
             }
-            else if (nodo.CompareTo(dato) > 0)// en duda
+            else if (raiz.CompareTo(dato) == 0)
             {
-                return nodo;
+                return raiz;
             }
-            else if (nodo.CompareTo(dato) < 0)//en duda
+            else if (raiz.CompareTo(dato) < 0)
             {
-                return Buscar(dato, nodo.derecho);
+                return Buscar(dato, raiz.derecho);
             }
             else
             {
-                return Buscar(dato, nodo.izquierdo);
+                return Buscar(dato, raiz.izquierdo);
             }
         }
 
@@ -258,5 +258,9 @@ namespace LibreriaDeClases.Clases
             }
         }
 
+        public Nodo<T> ObtenerRaiz()
+        {
+            return raiz;
+        }
     }
 }

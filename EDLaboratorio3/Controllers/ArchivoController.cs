@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EDLaboratorio3.DBContext;
 
 namespace EDLaboratorio3.Controllers
 {
@@ -145,7 +146,6 @@ namespace EDLaboratorio3.Controllers
             }
             ViewBag.Error = modelo.error;
             ViewBag.Correcto = modelo.Confirmacion;
-
             return View(DBContext.DefaultConnection.miAVLFechas.EnOrden());
         }
 
@@ -153,9 +153,9 @@ namespace EDLaboratorio3.Controllers
 
         public static int CompararFechas(Partido actual, Partido nuevo)
         {
-            if (DateTime.Compare(actual.FechaPartido, nuevo.FechaPartido) == 1)
+            if (actual.FechaPartido > nuevo.FechaPartido)
                 return 1;
-            else if (DateTime.Compare(actual.FechaPartido, nuevo.FechaPartido) == -1)
+            else if (actual.FechaPartido < nuevo.FechaPartido)
                 return -1;
             else
                 return 0;

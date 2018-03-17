@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EDLaboratorio3.DBContext;
+using LibreriaDeClases;
+using EDLaboratorio3.Models;
 
 
 namespace EDLaboratorio3.Controllers
@@ -32,7 +34,7 @@ namespace EDLaboratorio3.Controllers
 
         // GET: Partido/Create
         public ActionResult Create()
-        {
+        {  
             return View();
         }
 

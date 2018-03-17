@@ -9,6 +9,7 @@ namespace LibreriaDeClases.Interfaces
     public interface IArbolAVL<T>
     {
         Nodo<T> Buscar(T dato, Nodo<T> nodo);
+        Nodo<T> ObtenerRaiz();
         int ObtenerFactorEquilibrio(Nodo<T> nodo);
         Nodo<T> RotacionIzquierda(Nodo<T> nodo);
         Nodo<T> RotacionDerecha(Nodo<T> nodo);

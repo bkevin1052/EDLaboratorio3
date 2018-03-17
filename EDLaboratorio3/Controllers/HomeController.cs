@@ -20,52 +20,11 @@ namespace EDLaboratorio3.Controllers
             logWriter("VISITO INICIO", ruta, false);
 
             //PRUEBA DE INSERCIÔN
-            Partido P2 = new Partido();
-            Partido P3 = new Partido();
-
-            P2.Pais1 = "Estados Unidos";
-            P2.Pais2 = "Italia";
-            P2.Estadio = "CAMP NOU";
-            P2.NoPartido = 60;
-            P2.FechaPartido = Convert.ToDateTime("3 / 14 / 2018 3:49:11 PM");
-            P2.Grupo = "C";
-
-            P3.Pais1 = "Mexico";
-            P3.Pais2 = "Italia";
-            P3.Estadio = "bERNABEO";
-            P3.NoPartido = 70;
-            P3.FechaPartido = Convert.ToDateTime("3 / 14 / 2018 3:49:11 PM");
-            P3.Grupo = "B";
-
-            //cREACION DE NODOS
-            Nodo<Partido> n5 = new Nodo<Partido>(P2, CompararFecha);
-            Nodo<Partido> n6 = new Nodo<Partido>(P3, CompararFecha);
-
-            DefaultConnection.miAVLFechas.Insertar(n5);
-            DefaultConnection.miAVLFechas.Insertar(n6);
+            
 
 
             return View();
-        }
-        public static int CompararFecha(Partido actual, Partido nuevo)
-        {
-            if (actual.FechaPartido > nuevo.FechaPartido)
-                return 1;
-            else if (actual.FechaPartido < nuevo.FechaPartido)
-                return -1;
-            else
-                return 0;
-        }
-
-        public static int CompararNumero(Partido actual, Partido nuevo)
-        {
-            if(actual.NoPartido > nuevo.NoPartido)
-                return 1;
-            else if(actual.NoPartido < nuevo.NoPartido)
-                return -1;
-            else
-                return 0;
-        }
+        }       
 
         public ActionResult About()
         {
