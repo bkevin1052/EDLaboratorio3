@@ -20,10 +20,14 @@ namespace EDLaboratorio3.Controllers
 
         public ActionResult IndexFecha()
         {
+            HomeController.logWriter("VISITO INICIO DE FECHA", HomeController.ruta, true);
+
             return View(DBContext.DefaultConnection.miAVLFechas.EnOrden());
         }
         public ActionResult IndexNoPartido()
         {
+            HomeController.logWriter("VISITO INICIO DE NUMERO DE PARTIDO", HomeController.ruta, true);
+
             return View(DBContext.DefaultConnection.miAVLNoPartidos.EnOrden());
         }
         // GET: Partido/Details/5
@@ -44,7 +48,8 @@ namespace EDLaboratorio3.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
+                HomeController.logWriter("VISITO CREAR", HomeController.ruta, true);
+
 
                 return RedirectToAction("Index");
             }
@@ -79,6 +84,8 @@ namespace EDLaboratorio3.Controllers
         // GET: Partido/Delete/5
         public ActionResult Delete(int id)
         {
+            HomeController.logWriter("VISITO ELIMINAR", HomeController.ruta, true);
+
             return View();
         }
 
@@ -88,7 +95,6 @@ namespace EDLaboratorio3.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
 
                 return RedirectToAction("Index");
             }

@@ -100,6 +100,8 @@ namespace EDLaboratorio3.Controllers
         [HttpPost]
         public ActionResult CargaArchivoFecha(HttpPostedFileBase file)
         {
+            HomeController.logWriter("VISITO CARGAR ARCHIVO POR FECHA", HomeController.ruta, true);
+
             string filePath = string.Empty;
             Archivo modelo = new Archivo();
             if (file != null)
@@ -170,6 +172,7 @@ namespace EDLaboratorio3.Controllers
         [HttpPost]
         public ActionResult CargaArchivoNoPartido(HttpPostedFileBase file)
         {
+            HomeController.logWriter("VISITO CARGAR ARCHIVO POR NUMERO DE PARTIDO", HomeController.ruta, true);
             string filePath = string.Empty;
             Archivo modelo = new Archivo();
             if (file != null)
