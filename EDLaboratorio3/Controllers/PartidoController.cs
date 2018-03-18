@@ -109,14 +109,15 @@ namespace EDLaboratorio3.Controllers
 
         public ActionResult BusquedaFecha()
         {
-            HomeController.logWriter("VISITO BUSQUEDA FECHA PARTIDO", HomeController.ruta, true);
+            HomeController.logWriter("VISITO BUSQUEDA POR FECHA", HomeController.ruta, true);
+
             return View(DefaultConnection.miBusquedaFecha.ToList());
         }
 
         public ActionResult BusquedaNoPartido()
         {
             HomeController.logWriter("VISITO BUSQUEDA NUMERO DE PARTIDO", HomeController.ruta, true);
-            
+
             return View(DefaultConnection.miBusquedaNoPartidos.ToList());
         }
 
@@ -125,6 +126,8 @@ namespace EDLaboratorio3.Controllers
         {
             try
             {
+                HomeController.logWriter("VISITO BUSQUEDA POR FECHA", HomeController.ruta, true);
+
                 Partido partidoBuscadoFecha = DefaultConnection.miAVLFechas.EnOrden().Find(x => x.FechaPartido == DateTime.Parse(date));
 
                 if (partidoBuscadoFecha == null)
@@ -147,6 +150,8 @@ namespace EDLaboratorio3.Controllers
         {
             try
             {
+                HomeController.logWriter("VISITO BUSQUEDA NUMERO DE PARTIDO", HomeController.ruta, true);
+
                 Partido partidoBuscadoNoPartido = DefaultConnection.miAVLNoPartidos.EnOrden().Find(x => x.NoPartido == int.Parse(NoPartido));
                 if (partidoBuscadoNoPartido == null)
 
