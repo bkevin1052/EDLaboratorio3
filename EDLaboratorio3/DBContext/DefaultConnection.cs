@@ -15,6 +15,9 @@ namespace EDLaboratorio3.DBContext
         public static ArbolAVL<Partido> miAVLFechas = new ArbolAVL<Partido>();
         public static ArbolAVL<Partido> miAVLNoPartidos = new ArbolAVL<Partido>();
 
+        public static List<Partido> miBusquedaFecha = new List<Partido>();
+        public static List<Partido> miBusquedaNoPartidos = new List<Partido>();
+
 
         public int IDActual { get; set; }
 

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<EDLaboratorio3.Models.Partido>
+
+@{
+    ViewBag.Title = "BusquedaFecha";
+}
+
+<h2>BusquedaFecha</h2>
+
+<p>
+    @using (Html.BeginForm("BusquedaFecha", "Partido", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input type="datetime" name="date" />
+        <input type="submit" value="Buscar por fecha" />
+
+    }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NoPartido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaPartido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Grupo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pais1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pais2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estadio)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoPartido)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaPartido)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Grupo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pais1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pais2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estadio)
+        </td>
+        <td>
+        </td>
+    </tr>
+}
+
+</table>
