@@ -43,7 +43,7 @@ namespace EDLaboratorio3.Controllers
             return View();
         }
 
-        public static void logWriter(string contenido, string rutaArchivo, bool sobrescribir = true)
+        public void logWriter(string contenido, string rutaArchivo, bool sobrescribir = true)
         {
             StreamWriter logReporter = new StreamWriter(rutaArchivo, !sobrescribir);
             logReporter.WriteLine(contenido + "; " + DateTime.Now);

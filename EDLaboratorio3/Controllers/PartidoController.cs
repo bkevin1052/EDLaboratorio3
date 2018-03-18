@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using EDLaboratorio3.DBContext;
 using LibreriaDeClases;
 using EDLaboratorio3.Models;
-
+using System.IO;
 
 namespace EDLaboratorio3.Controllers
 {
@@ -20,14 +20,14 @@ namespace EDLaboratorio3.Controllers
 
         public ActionResult IndexFecha()
         {
-            HomeController.logWriter("VISITO INICIO DE FECHA", HomeController.ruta, true);
+            logWriter("VISITO INICIO DE FECHA", HomeController.ruta, true);
             
 
             return View(DBContext.DefaultConnection.miAVLFechas.EnOrden());
         }
         public ActionResult IndexNoPartido()
         {
-            HomeController.logWriter("VISITO INICIO DE NUMERO DE PARTIDO", HomeController.ruta, true);
+            logWriter("VISITO INICIO DE NUMERO DE PARTIDO", HomeController.ruta, true);
 
             return View(DBContext.DefaultConnection.miAVLNoPartidos.EnOrden());
         }
@@ -50,7 +50,7 @@ namespace EDLaboratorio3.Controllers
         {
             try
             {
-                HomeController.logWriter("VISITO CREAR", HomeController.ruta, true);
+                logWriter("VISITO CREAR", HomeController.ruta, true);
 
 
                 return RedirectToAction("Index");
@@ -86,7 +86,7 @@ namespace EDLaboratorio3.Controllers
         // GET: Partido/Delete/5
         public ActionResult Delete(int id)
         {
-            HomeController.logWriter("VISITO ELIMINAR", HomeController.ruta, true);
+            logWriter("VISITO ELIMINAR", HomeController.ruta, true);
 
             return View();
         }
@@ -109,14 +109,14 @@ namespace EDLaboratorio3.Controllers
 
         public ActionResult BusquedaFecha()
         {
-            HomeController.logWriter("VISITO BUSQUEDA POR FECHA", HomeController.ruta, true);
+            logWriter("VISITO BUSQUEDA POR FECHA", HomeController.ruta, true);
 
             return View(DefaultConnection.miBusquedaFecha.ToList());
         }
 
         public ActionResult BusquedaNoPartido()
         {
-            HomeController.logWriter("VISITO BUSQUEDA NUMERO DE PARTIDO", HomeController.ruta, true);
+            logWriter("VISITO BUSQUEDA NUMERO DE PARTIDO", HomeController.ruta, true);
 
             return View(DefaultConnection.miBusquedaNoPartidos.ToList());
         }
@@ -126,7 +126,7 @@ namespace EDLaboratorio3.Controllers
         {
             try
             {
-                HomeController.logWriter("VISITO BUSQUEDA POR FECHA", HomeController.ruta, true);
+                logWriter("VISITO BUSQUEDA POR FECHA", HomeController.ruta, true);
 
                 Partido partidoBuscadoFecha = DefaultConnection.miAVLFechas.EnOrden().Find(x => x.FechaPartido == DateTime.Parse(date));
 
@@ -150,7 +150,7 @@ namespace EDLaboratorio3.Controllers
         {
             try
             {
-                HomeController.logWriter("VISITO BUSQUEDA NUMERO DE PARTIDO", HomeController.ruta, true);
+                logWriter("VISITO BUSQUEDA NUMERO DE PARTIDO", HomeController.ruta, true);
 
                 Partido partidoBuscadoNoPartido = DefaultConnection.miAVLNoPartidos.EnOrden().Find(x => x.NoPartido == int.Parse(NoPartido));
                 if (partidoBuscadoNoPartido == null)
@@ -167,6 +167,13 @@ namespace EDLaboratorio3.Controllers
             {
                 return View("BusquedaNoPartido");
             }
+        }
+
+        public void logWriter(string contenido, string rutaArchivo, bool sobrescribir = true)
+        {
+            StreamWriter logReporter = new StreamWriter(rutaArchivo, !sobrescribir);
+            logReporter.WriteLine(contenido + "; " + DateTime.Now);
+            logReporter.Close();
         }
 
 

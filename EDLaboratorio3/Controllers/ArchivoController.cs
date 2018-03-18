@@ -100,7 +100,7 @@ namespace EDLaboratorio3.Controllers
         [HttpPost]
         public ActionResult CargaArchivoFecha(HttpPostedFileBase file)
         {
-            HomeController.logWriter("VISITO CARGAR ARCHIVO POR FECHA", HomeController.ruta, true);
+            logWriter("VISITO CARGAR ARCHIVO POR FECHA", HomeController.ruta, true);
 
             string filePath = string.Empty;
             Archivo modelo = new Archivo();
@@ -172,7 +172,7 @@ namespace EDLaboratorio3.Controllers
         [HttpPost]
         public ActionResult CargaArchivoNoPartido(HttpPostedFileBase file)
         {
-            HomeController.logWriter("VISITO CARGAR ARCHIVO POR NUMERO DE PARTIDO", HomeController.ruta, true);
+            logWriter("VISITO CARGAR ARCHIVO POR NUMERO DE PARTIDO", HomeController.ruta, true);
             string filePath = string.Empty;
             Archivo modelo = new Archivo();
             if (file != null)
@@ -232,6 +232,13 @@ namespace EDLaboratorio3.Controllers
                 return -1;
             else
                 return 0;
+        }
+
+        public void logWriter(string contenido, string rutaArchivo, bool sobrescribir = true)
+        {
+            StreamWriter logReporter = new StreamWriter(rutaArchivo, !sobrescribir);
+            logReporter.WriteLine(contenido + "; " + DateTime.Now);
+            logReporter.Close();
         }
     }
 }
