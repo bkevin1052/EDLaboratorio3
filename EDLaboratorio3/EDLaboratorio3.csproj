@@ -197,6 +197,8 @@
     <Content Include="Views\Archivo\CargaArchivoNoPartido.cshtml" />
     <Content Include="Views\Partido\IndexNoPartido.cshtml" />
     <Content Include="Views\Partido\IndexFecha.cshtml" />
+    <Content Include="Views\Partido\BusquedaFecha.cshtml" />
+    <Content Include="Views\Partido\BusquedaNoPartido.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

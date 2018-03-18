@@ -21,6 +21,7 @@ namespace EDLaboratorio3.Controllers
         public ActionResult IndexFecha()
         {
             HomeController.logWriter("VISITO INICIO DE FECHA", HomeController.ruta, true);
+            
 
             return View(DBContext.DefaultConnection.miAVLFechas.EnOrden());
         }
@@ -30,6 +31,7 @@ namespace EDLaboratorio3.Controllers
 
             return View(DBContext.DefaultConnection.miAVLNoPartidos.EnOrden());
         }
+        
         // GET: Partido/Details/5
         public ActionResult Details(int id)
         {
@@ -103,5 +105,65 @@ namespace EDLaboratorio3.Controllers
                 return View();
             }
         }
+
+
+        public ActionResult BusquedaFecha()
+        {
+            HomeController.logWriter("VISITO BUSQUEDA FECHA PARTIDO", HomeController.ruta, true);
+            return View(DefaultConnection.miBusquedaFecha.ToList());
+        }
+
+        public ActionResult BusquedaNoPartido()
+        {
+            HomeController.logWriter("VISITO BUSQUEDA NUMERO DE PARTIDO", HomeController.ruta, true);
+            
+            return View(DefaultConnection.miBusquedaNoPartidos.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult BusquedaFecha(string date)
+        {
+            try
+            {
+                Partido partidoBuscadoFecha = DefaultConnection.miAVLFechas.EnOrden().Find(x => x.FechaPartido == DateTime.Parse(date));
+
+                if (partidoBuscadoFecha == null)
+                {
+                    return HttpNotFound();
+                }
+
+                DefaultConnection.miBusquedaFecha.Add(partidoBuscadoFecha);
+
+                return RedirectToAction("BusquedaFecha");
+            }
+            catch
+            {
+                return View("BusquedaFecha");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult BusquedaNoPartido(string NoPartido)
+        {
+            try
+            {
+                Partido partidoBuscadoNoPartido = DefaultConnection.miAVLNoPartidos.EnOrden().Find(x => x.NoPartido == int.Parse(NoPartido));
+                if (partidoBuscadoNoPartido == null)
+
+                {
+
+                    return HttpNotFound();
+
+                }
+                DefaultConnection.miBusquedaNoPartidos.Add(partidoBuscadoNoPartido);
+                return RedirectToAction("BusquedaNoPartido");
+            }
+            catch
+            {
+                return View("BusquedaNoPartido");
+            }
+        }
+
+
     }
 }

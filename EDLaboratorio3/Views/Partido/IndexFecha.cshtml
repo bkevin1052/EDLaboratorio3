@@ -12,6 +12,8 @@
 }
 <p>
     @Html.ActionLink("Create New", "Create")
+    <input type="button" value="BUSCAR POR FECHA" onclick="location.href='@Url.Action("BusquedaFecha", "Partido" )'" />
+    
 </p>
 <table class="table">
     <tr>
@@ -57,9 +59,6 @@
                 @Html.DisplayFor(modelItem => item.Estadio)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.NoPartido }) |
-                @Html.ActionLink("Details", "Details", new { id = item.NoPartido }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.NoPartido })
             </td>
         </tr>
     }
