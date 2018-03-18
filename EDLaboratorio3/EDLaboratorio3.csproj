@@ -199,6 +199,8 @@
     <Content Include="Views\Partido\IndexFecha.cshtml" />
     <Content Include="Views\Partido\BusquedaFecha.cshtml" />
     <Content Include="Views\Partido\BusquedaNoPartido.cshtml" />
+    <Content Include="Views\Partido\CreateFecha.cshtml" />
+    <Content Include="Views\Partido\CreateNoPartido.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

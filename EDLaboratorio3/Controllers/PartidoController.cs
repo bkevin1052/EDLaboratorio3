@@ -38,26 +38,50 @@ namespace EDLaboratorio3.Controllers
             return View();
         }
 
-        // GET: Partido/Create
-        public ActionResult Create()
+        // GET: Partido/CreateFecha
+        public ActionResult CreateFecha()
         {  
             return View();
-        }
+        }        
 
-        // POST: Partido/Create
+        // POST: Partido/CreateFecha
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult CreateFecha(Partido partido)
         {
             try
             {
                 logWriter("VISITO CREAR", HomeController.ruta, true);
-
-
-                return RedirectToAction("Index");
+                Nodo<Partido> nuevo = new Nodo<Partido>(partido,ArchivoController.CompararFechas);
+                DefaultConnection.miAVLFechas.Insertar(nuevo);
+                return RedirectToAction("IndexFecha");
             }
             catch
             {
-                return View();
+                return View("IndexFecha");
+            }
+        }
+
+        // GET: Partido/CreateNoPartido
+        public ActionResult CreateNoPartido()
+        {
+            return View();
+        }
+
+        // POST: Partido/CreateNoPartido
+        [HttpPost]
+        public ActionResult CreateNoPartido(Partido partido)
+        {
+            try
+            {
+                logWriter("VISITO CREAR", HomeController.ruta, true);
+                Nodo<Partido> nuevo = new Nodo<Partido>(partido, ArchivoController.CompararNoPartido);
+                DefaultConnection.miAVLNoPartidos.Insertar(nuevo);
+
+                return RedirectToAction("IndexNoPartido");
+            }
+            catch
+            {
+                return View("IndexNoPartido");
             }
         }
 
