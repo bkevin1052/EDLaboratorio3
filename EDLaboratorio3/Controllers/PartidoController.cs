@@ -108,21 +108,22 @@ namespace EDLaboratorio3.Controllers
         }
 
         // GET: Partido/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult DeleteNoPartido(int id)
         {
             logWriter("VISITO ELIMINAR", HomeController.ruta, true);
 
-            return View();
+            return View(DefaultConnection.miAVLNoPartidos.EnOrden().Where(x => x.NoPartido == id).FirstOrDefault());
         }
 
         // POST: Partido/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult DeleteNoPartido(int id, FormCollection collection)
         {
             try
             {
-
-                return RedirectToAction("Index");
+                Partido partido = DefaultConnection.miAVLNoPartidos.EnOrden().Where(x => x.NoPartido == id).FirstOrDefault();
+                DefaultConnection.miAVLNoPartidos.Eliminar(partido);
+                return RedirectToAction("IndexNoPartido");
             }
             catch
             {
@@ -130,7 +131,29 @@ namespace EDLaboratorio3.Controllers
             }
         }
 
+        // GET: Partido/Delete/5
+        public ActionResult DeleteFechas(int id)
+        {
+            logWriter("VISITO ELIMINAR", HomeController.ruta, true);
 
+            return View(DefaultConnection.miAVLFechas.EnOrden().Where(x => x.NoPartido == id).FirstOrDefault());
+        }
+
+        // POST: Partido/Delete/5
+        [HttpPost]
+        public ActionResult DeleteFechas(int id, FormCollection collection)
+        {
+            try
+            {
+                Partido partido = DefaultConnection.miAVLFechas.EnOrden().Where(x => x.NoPartido == id).FirstOrDefault();
+                DefaultConnection.miAVLFechas.Eliminar(partido);
+                return RedirectToAction("IndexFecha");
+            }
+            catch
+            {
+                return View();
+            }
+        }
         public ActionResult BusquedaFecha()
         {
             logWriter("VISITO BUSQUEDA POR FECHA", HomeController.ruta, true);

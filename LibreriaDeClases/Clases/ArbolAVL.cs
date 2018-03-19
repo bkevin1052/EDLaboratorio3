@@ -166,6 +166,116 @@ namespace LibreriaDeClases.Clases
 
                 }
             }
+            ActualizarFactoresEquilibrio(raiz, 0, 0, 0);
+            Balancear(raiz);
+
+        }
+
+        public void Balancear(Nodo<T> actual)
+        {
+            if(!(actual.izquierdo == null && actual.derecho == null))
+            {
+                if(actual.izquierdo != null)
+                {
+                    Balancear(actual.izquierdo);
+                }
+                if(actual.derecho != null)
+                {
+                    Balancear(actual.derecho);
+                }
+                if(Math.Abs(ObtenerFactorEquilibrio(actual.derecho) - ObtenerFactorEquilibrio(actual.izquierdo)) == 2)
+                {
+                    if (ObtenerFactorEquilibrio(actual.derecho) - ObtenerFactorEquilibrio(actual.izquierdo) == -2)
+                    {
+                        if (!((ObtenerFactorEquilibrio(actual.izquierdo.derecho)- ObtenerFactorEquilibrio(actual.izquierdo.izquierdo)) == 1))
+                        {
+                            Nodo<T> Padre = BuscarPadre(raiz, actual.dato);
+                            if (Padre == null)
+                            {
+                                raiz = RotacionIzquierda(actual);
+                            }
+
+                            else
+                            {
+                                if (Padre.derecho.CompareTo(actual.dato) == 0)
+                                {
+                                    Padre.derecho = RotacionIzquierda(actual);
+                                }
+                                else
+                                {
+                                    Padre.izquierdo = RotacionIzquierda(actual);
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            Nodo<T> Padre = BuscarPadre(raiz, actual.dato);
+                            if (Padre == null)
+                            {
+                                raiz = RotacionDobleIzquierda(actual);
+                            }
+
+                            else
+                            {
+                                if (Padre.derecho.CompareTo(actual.dato) == 0)
+                                {
+                                    Padre.derecho = RotacionDobleIzquierda(actual);
+                                }
+                                else
+                                {
+                                    Padre.izquierdo = RotacionDobleIzquierda(actual);
+                                }
+
+                            }
+                        }
+                    }
+                    if (ObtenerFactorEquilibrio(actual.derecho) - ObtenerFactorEquilibrio(actual.izquierdo) == 2)
+                    {
+                        if (!((ObtenerFactorEquilibrio(actual.derecho.derecho) - ObtenerFactorEquilibrio(actual.derecho.izquierdo)) == -1))
+                        {
+                            Nodo<T> Padre = BuscarPadre(raiz, actual.dato);
+                            if (Padre == null)
+                            {
+                                raiz = RotacionDerecha(actual);
+                            }
+                            else
+                            {
+                                if (Padre.derecho.CompareTo(actual.dato) == 0)
+                                {
+                                    Padre.derecho = RotacionDerecha(actual);
+                                }
+                                else
+                                {
+                                    Padre.izquierdo = RotacionDerecha(actual);
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            Nodo<T> Padre = BuscarPadre(raiz, actual.dato);
+                            if (Padre == null)
+                            {
+                                raiz = RotacionDobleDerecha(actual);
+                            }
+                            else
+                            {
+                                if (Padre.derecho.CompareTo(actual.dato) == 0)
+                                {
+                                    Padre.derecho = RotacionDobleDerecha(actual);
+                                }
+                                else
+                                {
+                                    Padre.izquierdo = RotacionDobleDerecha(actual);
+                                }
+
+                            }
+                        }
+                    }
+                }
+                ActualizarFactoresEquilibrio(raiz, 0, 0, 0);
+            }
         }
 
         public Nodo<T> EncontrarMasDerechadeIzquierdo(Nodo<T> subarbol)
@@ -186,13 +296,13 @@ namespace LibreriaDeClases.Clases
             {
                 if(actual. izquierdo != null)
                 {
-                    contador = ActualizarFactoresEquilibrio(actual.izquierdo, contador++, altura++, 0);
+                    contador = ActualizarFactoresEquilibrio(actual.izquierdo, (contador+1), (altura+1), 0);
                 }
                 if(actual.derecho != null)
                 {
-                    if(contador<ActualizarFactoresEquilibrio(actual.derecho, aux++, altura++, 0))
+                    if(contador<ActualizarFactoresEquilibrio(actual.derecho, (aux+1), (altura + 1), 0))
                     {
-                        contador = ActualizarFactoresEquilibrio(actual.derecho, aux++, altura++, 0);
+                        contador = ActualizarFactoresEquilibrio(actual.derecho, (aux+1), (altura + 1), 0);
                     }
                 }
                 actual.factorEquilibrio = contador - altura;
@@ -208,24 +318,24 @@ namespace LibreriaDeClases.Clases
         public Nodo<T> BuscarPadre(Nodo<T> actual, T dato)
         {
             Nodo<T> padre = actual;
-            if (actual.CompareTo(dato) < 0)
+            if (actual.CompareTo(dato) > 0)
             {
                 if (actual.izquierdo != null)
                 {
                     if (actual.izquierdo.CompareTo(dato) != 0)
-                        BuscarPadre(actual.izquierdo, dato);
+                       padre = BuscarPadre(actual.izquierdo, dato);
                 }
                 else
                 {
                     padre = null;
                 }
             }
-            else if (actual.CompareTo(dato) > 0)
+            else if (actual.CompareTo(dato) < 0)
             {
                 if (actual.derecho != null)
                 {
                     if (actual.derecho.CompareTo(dato) != 0)
-                        BuscarPadre(actual.derecho, dato);
+                        padre = BuscarPadre(actual.derecho, dato);
                 }
                 else
                 {
@@ -365,7 +475,7 @@ namespace LibreriaDeClases.Clases
             }
             else
             {
-                return null;
+                return subArbol;
             }
             //Actualizar altura
             if ((subArbol.izquierdo == null) && (subArbol.derecho != null))

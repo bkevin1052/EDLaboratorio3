@@ -201,6 +201,8 @@
     <Content Include="Views\Partido\BusquedaNoPartido.cshtml" />
     <Content Include="Views\Partido\CreateFecha.cshtml" />
     <Content Include="Views\Partido\CreateNoPartido.cshtml" />
+    <Content Include="Views\Partido\DeleteFechas.cshtml" />
+    <Content Include="Views\Partido\DeleteNoPartido.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

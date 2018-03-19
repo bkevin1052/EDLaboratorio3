@@ -59,6 +59,8 @@
                 @Html.DisplayFor(modelItem => item.Estadio)
             </td>
             <td>
+                @Html.ActionLink("Details", "Details", new { id = item.NoPartido }) |
+                @Html.ActionLink("Delete", "DeleteFechas", new { id = item.NoPartido })
             </td>
         </tr>
     }
