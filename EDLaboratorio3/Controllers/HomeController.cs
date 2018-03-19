@@ -43,9 +43,9 @@ namespace EDLaboratorio3.Controllers
             return View();
         }
 
-        public void logWriter(string contenido, string rutaArchivo, bool sobrescribir = true)
+        public void logWriter(string contenido, string rutaArchivo, bool sobrescribir)
         {
-            StreamWriter logReporter = new StreamWriter(rutaArchivo, !sobrescribir);
+            StreamWriter logReporter = new StreamWriter(rutaArchivo, sobrescribir);
             logReporter.WriteLine(contenido + "; " + DateTime.Now);
             logReporter.Close();
         }

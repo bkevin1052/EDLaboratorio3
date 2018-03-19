@@ -1,0 +1,232 @@
+        //GET SubirArchivoPaises
+        public ActionResult SubirArchivoPaises()
+        {
+            return View();
+        }
+
+        //Post SubirArchivoPaises
+        [HttpPost]
+        public ActionResult SubirArchivoPaises(HttpPostedFileBase file)
+        {
+            logWriter("VISITO SUBIR ARCHIVO JSON", ruta, true);
+            string filePath = string.Empty;
+            Archivo modelo = new Archivo();
+            if (file != null)
+            {
+                string ruta = Server.MapPath("~/Temp/");
+
+                if (!Directory.Exists(ruta))
+                {
+                    Directory.CreateDirectory(ruta);
+                }
+
+                filePath = ruta + Path.GetFileName(file.FileName);
+
+                string extension = Path.GetExtension(file.FileName);
+
+                file.SaveAs(filePath);
+
+                using (StreamReader r = new StreamReader(filePath))
+                {
+                    string json = r.ReadToEnd();
+                    dynamic array = JsonConvert.DeserializeObject(json);
+                    RecorridoPreOrdenInternoEnteros(array);
+
+
+                }
+
+                modelo.SubirArchivo(ruta, file);
+
+            }
+            ViewBag.Error = modelo.error;
+            ViewBag.Correcto = modelo.Confirmacion;
+
+            return View(db.Paises);
+        }
+
+        /// <summary>
+        /// Funcion que permite agregar logs de la acciones realizada por el usuario dentro del programa
+        /// </summary>
+        /// <param name="contenido">Acciones realizadas por el usuario</param>
+        /// <param name="rutaArchivo"> ruta del archivo en la computadora</param>
+        /// <param name="sobrescribir">no sobreescribir</param>
+        public static void logWriter(string contenido, string rutaArchivo, bool sobrescribir = true)
+        {
+            StreamWriter logReporter = new StreamWriter(rutaArchivo, !sobrescribir);
+            logReporter.WriteLine(contenido + "; " + DateTime.Now);
+            logReporter.Close();
+        }
+
+
+        private void RecorridoPreOrdenInternoPaises(dynamic actual)
+        {
+
+            if (actual != null)
+            {
+                var item = actual.valor;
+                Pais temp = new Pais();
+                temp.nombre = item.nombre;
+                temp.Grupo = item.Grupo;
+                temp.paisID = ++db.IDActual;
+                Nodo<Pais> n = new Nodo<Pais>(temp, CompararPaises);
+                db.Paises.Insertar(n);
+                RecorridoPreOrdenInternoPaises(JsonConvert.DeserializeObject(Convert.ToString(actual.izquierdo)));
+                RecorridoPreOrdenInternoPaises(JsonConvert.DeserializeObject(Convert.ToString(actual.derecho)));
+            }
+        }
+
+        public static int CompararPaises(Pais actual, Pais nuevo)
+        {
+            if (String.Compare(actual.nombre, nuevo.nombre) == 1)
+                return 1;
+            else if (String.Compare(actual.nombre, nuevo.nombre) == -1)
+                return -1;
+            else
+                return 0;
+        }
+
+        //GET SubirArchivo
+        public ActionResult SubirArchivoEnteros()
+        {
+            return View();
+        }
+
+        //Post SubirArchivo
+        [HttpPost]
+        public ActionResult SubirArchivoEnteros(HttpPostedFileBase file)
+        {
+            logWriter("VISITO SUBIR ARCHIVO JSON", ruta, true);
+            string filePath = string.Empty;
+            Archivo modelo = new Archivo();
+            if (file != null)
+            {
+                string ruta = Server.MapPath("~/Temp/");
+
+                if (!Directory.Exists(ruta))
+                {
+                    Directory.CreateDirectory(ruta);
+                }
+
+                filePath = ruta + Path.GetFileName(file.FileName);
+
+                string extension = Path.GetExtension(file.FileName);
+
+                file.SaveAs(filePath);
+
+                using (StreamReader r = new StreamReader(filePath))
+                {
+                    string json = r.ReadToEnd();
+                    dynamic array = JsonConvert.DeserializeObject(json);
+                    RecorridoPreOrdenInternoEnteros(array);
+
+
+                }
+
+                modelo.SubirArchivo(ruta, file);
+
+            }
+            ViewBag.Error = modelo.error;
+            ViewBag.Correcto = modelo.Confirmacion;
+
+            return View(db.Enteros);
+        }
+
+
+        private void RecorridoPreOrdenInternoEnteros(dynamic actual)
+        {
+
+            if (actual != null)
+            {
+                var item = actual.valor;
+                Entero temp = new Entero();
+                temp.EnteroValue = item;
+                temp.enteroID = ++db.IDActual;
+                Nodo<Entero> n = new Nodo<Entero>(temp, CompararEnteros);
+                db.Enteros.Insertar(n);
+                RecorridoPreOrdenInternoEnteros(JsonConvert.DeserializeObject(Convert.ToString(actual.izquierdo)));
+                RecorridoPreOrdenInternoEnteros(JsonConvert.DeserializeObject(Convert.ToString(actual.derecho)));
+            }
+        }
+
+        public static int CompararEnteros(Entero actual, Entero nuevo)
+        {
+            if (actual.EnteroValue > nuevo.EnteroValue)
+                return 1;
+            else if (actual.EnteroValue < nuevo.EnteroValue)
+                return -1;
+            else
+                return 0;
+        }
+
+        //GET SubirArchivoCadena
+        public ActionResult SubirArchivoCadena()
+        {
+            return View();
+        }
+
+        //Post SubirArchivoCadena
+        [HttpPost]
+        public ActionResult SubirArchivoCadena(HttpPostedFileBase file)
+        {
+            logWriter("VISITO SUBIR ARCHIVO JSON", ruta, true);
+            string filePath = string.Empty;
+            Archivo modelo = new Archivo();
+            if (file != null)
+            {
+                string ruta = Server.MapPath("~/Temp/");
+
+                if (!Directory.Exists(ruta))
+                {
+                    Directory.CreateDirectory(ruta);
+                }
+
+                filePath = ruta + Path.GetFileName(file.FileName);
+
+                string extension = Path.GetExtension(file.FileName);
+
+                file.SaveAs(filePath);
+
+                using (StreamReader r = new StreamReader(filePath))
+                {
+                    string json = r.ReadToEnd();
+                    dynamic array = JsonConvert.DeserializeObject(json);
+                    RecorridoPreOrdenInternoCadenas(array);
+
+
+                }
+
+                modelo.SubirArchivo(ruta, file);
+
+            }
+            ViewBag.Error = modelo.error;
+            ViewBag.Correcto = modelo.Confirmacion;
+
+            return View(db.Cadenas);
+        }
+
+
+        private void RecorridoPreOrdenInternoCadenas(dynamic actual)
+        {
+
+            if (actual != null)
+            {
+                var item = actual.valor;
+                Cadena temp = new Cadena();
+                temp.CadenaValue = item;
+                temp.cadenaID = ++db.IDActual;
+                Nodo<Cadena> n = new Nodo<Cadena>(temp, CompararCadenas);
+                db.Cadenas.Insertar(n);
+                RecorridoPreOrdenInternoCadenas(JsonConvert.DeserializeObject(Convert.ToString(actual.izquierdo)));
+                RecorridoPreOrdenInternoCadenas(JsonConvert.DeserializeObject(Convert.ToString(actual.derecho)));
+            }
+        }
+
+        public static int CompararCadenas(Cadena actual, Cadena nuevo)
+        {
+            if (String.Compare(actual.CadenaValue, nuevo.CadenaValue) == 1)
+                return 1;
+            else if (String.Compare(actual.CadenaValue, nuevo.CadenaValue) == -1)
+                return -1;
+            else
+                return 0;
+        }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,12 +12,25 @@ namespace LibreriaDeClases.Clases
     {
         private Nodo<T> raiz;
         List<T> lista;
+        string rutaArchivo;
+        bool sobreescribir;
 
         public ArbolAVL()
         {
             raiz = null;
         }
+        public void logWriterAsignacion(string rutaArchivo, bool sobrescribir = true)
+        {
+            this.rutaArchivo = rutaArchivo;
+            this.sobreescribir = sobrescribir;
+        }
 
+        public void logWriter(string contenido)
+        {
+            StreamWriter logReporter = new StreamWriter(rutaArchivo, sobreescribir);
+            logReporter.WriteLine(contenido + "; " + DateTime.Now);
+            logReporter.Close();
+        }
         public void Insertar(Nodo<T> nuevo)
         {
             if (raiz == null)
@@ -82,7 +96,7 @@ namespace LibreriaDeClases.Clases
             }
             else if(padre !=null)
             {
-                if(padre.derecho.CompareTo(dato) == 0)
+                if(padre.derecho != null && padre.derecho.CompareTo(dato) == 0)
                 {
                     if (padre.derecho.izquierdo == null)
                     {
@@ -122,7 +136,7 @@ namespace LibreriaDeClases.Clases
                         }
                     }
                 }
-                else if(padre.izquierdo.CompareTo(dato) == 0)
+                else if(padre.izquierdo != null && padre.izquierdo.CompareTo(dato) == 0)
                 {
                     if (padre.izquierdo.izquierdo == null)
                     {
@@ -192,18 +206,18 @@ namespace LibreriaDeClases.Clases
                             Nodo<T> Padre = BuscarPadre(raiz, actual.dato);
                             if (Padre == null)
                             {
-                                raiz = RotacionIzquierda(actual);
+                                raiz = RotacionalaDerecha(actual);
                             }
 
                             else
                             {
                                 if (Padre.derecho.CompareTo(actual.dato) == 0)
                                 {
-                                    Padre.derecho = RotacionIzquierda(actual);
+                                    Padre.derecho = RotacionalaDerecha(actual);
                                 }
                                 else
                                 {
-                                    Padre.izquierdo = RotacionIzquierda(actual);
+                                    Padre.izquierdo = RotacionalaDerecha(actual);
                                 }
 
                             }
@@ -213,18 +227,18 @@ namespace LibreriaDeClases.Clases
                             Nodo<T> Padre = BuscarPadre(raiz, actual.dato);
                             if (Padre == null)
                             {
-                                raiz = RotacionDobleIzquierda(actual);
+                                raiz = RotacionDoblealaDerecha(actual);
                             }
 
                             else
                             {
                                 if (Padre.derecho.CompareTo(actual.dato) == 0)
                                 {
-                                    Padre.derecho = RotacionDobleIzquierda(actual);
+                                    Padre.derecho = RotacionDoblealaDerecha(actual);
                                 }
                                 else
                                 {
-                                    Padre.izquierdo = RotacionDobleIzquierda(actual);
+                                    Padre.izquierdo = RotacionDoblealaDerecha(actual);
                                 }
 
                             }
@@ -237,17 +251,17 @@ namespace LibreriaDeClases.Clases
                             Nodo<T> Padre = BuscarPadre(raiz, actual.dato);
                             if (Padre == null)
                             {
-                                raiz = RotacionDerecha(actual);
+                                raiz = RotacionalaIzquierda(actual);
                             }
                             else
                             {
                                 if (Padre.derecho.CompareTo(actual.dato) == 0)
                                 {
-                                    Padre.derecho = RotacionDerecha(actual);
+                                    Padre.derecho = RotacionalaIzquierda(actual);
                                 }
                                 else
                                 {
-                                    Padre.izquierdo = RotacionDerecha(actual);
+                                    Padre.izquierdo = RotacionalaIzquierda(actual);
                                 }
 
                             }
@@ -257,17 +271,17 @@ namespace LibreriaDeClases.Clases
                             Nodo<T> Padre = BuscarPadre(raiz, actual.dato);
                             if (Padre == null)
                             {
-                                raiz = RotacionDobleDerecha(actual);
+                                raiz = RotacionDoblealaIzquierda(actual);
                             }
                             else
                             {
                                 if (Padre.derecho.CompareTo(actual.dato) == 0)
                                 {
-                                    Padre.derecho = RotacionDobleDerecha(actual);
+                                    Padre.derecho = RotacionDoblealaIzquierda(actual);
                                 }
                                 else
                                 {
-                                    Padre.izquierdo = RotacionDobleDerecha(actual);
+                                    Padre.izquierdo = RotacionDoblealaIzquierda(actual);
                                 }
 
                             }
@@ -381,45 +395,46 @@ namespace LibreriaDeClases.Clases
         }
 
 
-        public Nodo<T> RotacionIzquierda(Nodo<T> nodo)
+        public Nodo<T> RotacionalaDerecha(Nodo<T> nodo)
         {
             Nodo<T> aux = nodo.izquierdo;
             nodo.izquierdo = aux.derecho;
             aux.derecho = nodo;
             nodo.factorEquilibrio = Math.Max(ObtenerFactorEquilibrio(nodo.izquierdo), ObtenerFactorEquilibrio(nodo.derecho)) + 1;
             aux.factorEquilibrio = Math.Max(ObtenerFactorEquilibrio(aux.izquierdo), ObtenerFactorEquilibrio(aux.derecho)) + 1;
-
+            logWriter("SE BALANCEÓ EL ÁRBOL CON UNA ROTACIÓN A LA DERECHA");
             return aux;
         }
 
 
-        public Nodo<T> RotacionDerecha(Nodo<T> nodo)
+        public Nodo<T> RotacionalaIzquierda(Nodo<T> nodo)
         {
             Nodo<T> aux = nodo.derecho;
             nodo.derecho = aux.izquierdo;
             aux.izquierdo = nodo;
             nodo.factorEquilibrio = Math.Max(ObtenerFactorEquilibrio(nodo.izquierdo), ObtenerFactorEquilibrio(nodo.derecho)) + 1;
             aux.factorEquilibrio = Math.Max(ObtenerFactorEquilibrio(aux.izquierdo), ObtenerFactorEquilibrio(aux.derecho)) + 1;
-
+            logWriter("SE BALANCEÓ EL ÁRBOL CON UNA ROTACIÓN A LA IZQUIERDA");
             return aux;
         }
 
 
-        public Nodo<T> RotacionDobleIzquierda(Nodo<T> nodo)
+        public Nodo<T> RotacionDoblealaDerecha(Nodo<T> nodo)
         {
+            logWriter("SE BALANCEÓ EL ÁRBOL CON UNA ROTACIÓN DOBLE A LA DERECHA");
             Nodo<T> temp;
-            nodo.izquierdo = RotacionDerecha(nodo.izquierdo);
-            temp = RotacionIzquierda(nodo);
+            nodo.izquierdo = RotacionalaIzquierda(nodo.izquierdo);
+            temp = RotacionalaDerecha(nodo);
             return temp;
         }
 
 
-        public Nodo<T> RotacionDobleDerecha(Nodo<T> nodo)
+        public Nodo<T> RotacionDoblealaIzquierda(Nodo<T> nodo)
         {
+            logWriter("SE BALANCEÓ EL ÁRBOL CON UNA ROTACIÓN DOBLE A LA IZQUIERDA");
             Nodo<T> temp;
-            nodo.derecho = RotacionIzquierda(nodo.derecho);
-            temp = RotacionDerecha(nodo);
-
+            nodo.derecho = RotacionalaDerecha(nodo.derecho);
+            temp = RotacionalaIzquierda(nodo);
             return temp;
         }
 
@@ -440,11 +455,11 @@ namespace LibreriaDeClases.Clases
                     {
                         if (nuevo.CompareTo(subArbol.izquierdo.dato) < 0) // en duda
                         {
-                            nuevoPadre = RotacionIzquierda(subArbol);
+                            nuevoPadre = RotacionalaDerecha(subArbol);
                         }
                         else
                         {
-                            nuevoPadre = RotacionDobleIzquierda(subArbol);
+                            nuevoPadre = RotacionDoblealaDerecha(subArbol);
 
                         }
 
@@ -464,11 +479,11 @@ namespace LibreriaDeClases.Clases
                     {
                         if (nuevo.CompareTo(subArbol.derecho.dato) > 0) // en duda
                         {
-                            nuevoPadre = RotacionDerecha(subArbol);
+                            nuevoPadre = RotacionalaIzquierda(subArbol);
                         }
                         else
                         {
-                            nuevoPadre = RotacionDobleDerecha(subArbol);
+                            nuevoPadre = RotacionDoblealaIzquierda(subArbol);
                         }
                     }
                 }

@@ -137,7 +137,11 @@ namespace EDLaboratorio3.Controllers
                         temp.Pais2 = itemtemp.Pais2;
                         temp.Estadio = itemtemp.Estadio;
                         Nodo<Partido> n = new Nodo<Partido>(temp, CompararFechas);
+                        DefaultConnection.miAVLFechas.logWriterAsignacion(HomeController.ruta, true);
+                        string log = "SE INSERTÓ UN PARTIDO CON FECHA: " + temp.FechaPartido.Day.ToString() + "/" + temp.FechaPartido.Month.ToString() + "/" + temp.FechaPartido.Year.ToString();
+                        logWriter(log, HomeController.ruta, true);
                         DBContext.DefaultConnection.miAVLFechas.Insertar(n);
+                        
                     }
 
                 }
@@ -194,21 +198,25 @@ namespace EDLaboratorio3.Controllers
                 {
                     string json = r.ReadToEnd();
                     dynamic array = JsonConvert.DeserializeObject(json);
-                    foreach(var item in array)
+                    foreach (var item in array)
                     {
-                        
+
 
                         dynamic itemtemp = JsonConvert.DeserializeObject(item.Value.ToString());
 
-                            Partido temp = new Partido();
-                            temp.NoPartido = itemtemp.noPartido;
-                            temp.FechaPartido = itemtemp.FechaPartido;
-                            temp.Grupo = itemtemp.Grupo;
-                            temp.Pais1 = itemtemp.Pais1;
-                            temp.Pais2 = itemtemp.Pais2;
-                            temp.Estadio = itemtemp.Estadio;
-                            Nodo<Partido> n = new Nodo<Partido>(temp, CompararNoPartido);
-                            DBContext.DefaultConnection.miAVLNoPartidos.Insertar(n);
+                        Partido temp = new Partido();
+                        temp.NoPartido = itemtemp.noPartido;
+                        temp.FechaPartido = itemtemp.FechaPartido;
+                        temp.Grupo = itemtemp.Grupo;
+                        temp.Pais1 = itemtemp.Pais1;
+                        temp.Pais2 = itemtemp.Pais2;
+                        temp.Estadio = itemtemp.Estadio;
+                        Nodo<Partido> n = new Nodo<Partido>(temp, CompararNoPartido);
+                        DefaultConnection.miAVLNoPartidos.logWriterAsignacion(HomeController.ruta, true);
+                        string log = "SE INSERTÓ UN PARTIDO NÚMERO: " + temp.NoPartido.ToString();
+                        logWriter(log, HomeController.ruta, true);
+                        DBContext.DefaultConnection.miAVLNoPartidos.Insertar(n);
+                        
                     }
 
                 }
@@ -236,7 +244,7 @@ namespace EDLaboratorio3.Controllers
 
         public void logWriter(string contenido, string rutaArchivo, bool sobrescribir = true)
         {
-            StreamWriter logReporter = new StreamWriter(rutaArchivo, !sobrescribir);
+            StreamWriter logReporter = new StreamWriter(rutaArchivo, sobrescribir);
             logReporter.WriteLine(contenido + "; " + DateTime.Now);
             logReporter.Close();
         }
