@@ -53,6 +53,9 @@ namespace EDLaboratorio3.Controllers
                 logWriter("VISITO CREAR", HomeController.ruta, true);
                 Nodo<Partido> nuevo = new Nodo<Partido>(partido,ArchivoController.CompararFechas);
                 DefaultConnection.miAVLFechas.Insertar(nuevo);
+                string log = "SE INSERTÓ UN PARTIDO CON FECHA: " + nuevo.dato.FechaPartido.Day.ToString() + "/" + nuevo.dato.FechaPartido.Month.ToString() + "/" + nuevo.dato.FechaPartido.Year.ToString();
+                logWriter(log, HomeController.ruta, true);
+                DefaultConnection.miAVLFechas.logWriterAsignacion(HomeController.ruta, true);
                 return RedirectToAction("IndexFecha");
             }
             catch
@@ -74,7 +77,10 @@ namespace EDLaboratorio3.Controllers
             try
             {
                 logWriter("VISITO CREAR", HomeController.ruta, true);
+                DefaultConnection.miAVLNoPartidos.logWriterAsignacion(HomeController.ruta, true);
                 Nodo<Partido> nuevo = new Nodo<Partido>(partido, ArchivoController.CompararNoPartido);
+                string log = "SE INSERTÓ UN PARTIDO CON FECHA: " + nuevo.dato.NoPartido.ToString();
+                logWriter(log, HomeController.ruta, true);
                 DefaultConnection.miAVLNoPartidos.Insertar(nuevo);
 
                 return RedirectToAction("IndexNoPartido");
@@ -122,6 +128,9 @@ namespace EDLaboratorio3.Controllers
             try
             {
                 Partido partido = DefaultConnection.miAVLNoPartidos.EnOrden().Where(x => x.NoPartido == id).FirstOrDefault();
+                DefaultConnection.miAVLNoPartidos.logWriterAsignacion(HomeController.ruta, true);
+                string log = "SE ELIMINÓ UN PARTIDO NÚMERO: " + partido.NoPartido.ToString();
+                logWriter(log, HomeController.ruta, true);
                 DefaultConnection.miAVLNoPartidos.Eliminar(partido);
                 return RedirectToAction("IndexNoPartido");
             }
@@ -146,7 +155,11 @@ namespace EDLaboratorio3.Controllers
             try
             {
                 Partido partido = DefaultConnection.miAVLFechas.EnOrden().Where(x => x.NoPartido == id).FirstOrDefault();
+                DefaultConnection.miAVLFechas.logWriterAsignacion(HomeController.ruta, true);
+                string log = "SE ELIMINÓ UN PARTIDO CON FECHA: " + partido.FechaPartido.Day.ToString() + "/" + partido.FechaPartido.Month.ToString() + "/" + partido.FechaPartido.Year.ToString();
+                logWriter(log, HomeController.ruta, true);
                 DefaultConnection.miAVLFechas.Eliminar(partido);
+
                 return RedirectToAction("IndexFecha");
             }
             catch
@@ -218,7 +231,7 @@ namespace EDLaboratorio3.Controllers
 
         public void logWriter(string contenido, string rutaArchivo, bool sobrescribir = true)
         {
-            StreamWriter logReporter = new StreamWriter(rutaArchivo, !sobrescribir);
+            StreamWriter logReporter = new StreamWriter(rutaArchivo, sobrescribir);
             logReporter.WriteLine(contenido + "; " + DateTime.Now);
             logReporter.Close();
         }
